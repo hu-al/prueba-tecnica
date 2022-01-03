@@ -27,6 +27,7 @@ const fetchEmployees = () => (dispatch) => {
   return axios
     .get(url)
     .then((response) => {
+      console.log(response.data.data.employees);
       dispatch(fetchEmployeesSucceeded(response.data.data.employees));
     })
     .catch((err) => {

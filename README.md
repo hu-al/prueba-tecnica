@@ -2,6 +2,22 @@
 
 Esta es la prueba técnica de front end.
 
+## Iniciar proyecto
+
+Para iniciar el proyecto es necesario correr:
+
+`yarn`
+
+o
+
+`npm install`
+
+para instalar las dependencias y posteriormente
+
+`yarn start`
+
+para ejecutarlo
+
 ## Scripts disponibles
 
 En la raíz del proyecto se pueden correr:

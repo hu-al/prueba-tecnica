@@ -1,6 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import styles from "./Employees.module.css";
+import EmployeesTable from "./EmployeesTable";
 
 const Employees = () => {
   const [form, setForm] = useState({ name: "", lastName: "", date: "" });
@@ -47,6 +48,7 @@ const Employees = () => {
   };
   return (
     <div className={styles.formEmployee}>
+      <EmployeesTable />
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Nombre</Form.Label>

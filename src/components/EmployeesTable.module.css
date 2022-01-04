@@ -1,0 +1,28 @@
+.employeesTable {
+  margin: 1rem;
+  width: 100%;
+}
+
+.employeesTable table {
+  border: 1px solid black;
+  margin: 0;
+  width: 100%;
+}
+
+.employeesTable tr:nth-child(2n) {
+  background-color: lightgray;
+}
+
+.employeesTable td {
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+}
+
+.pagination {
+  margin: 0.2rem;
+}
+
+.pagination button {
+  margin: 0.2rem;
+}

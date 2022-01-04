@@ -92,7 +92,9 @@ const Employees = () => {
             {errors.date}
           </Form.Control.Feedback>
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className={styles.submitButton}>
+          Submit
+        </Button>
       </Form>
     </div>
   );

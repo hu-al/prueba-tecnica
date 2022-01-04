@@ -3,9 +3,14 @@ import { useState } from "react";
 import styles from "./Employees.module.css";
 import EmployeesTable from "./EmployeesTable";
 
+import fetchEmployees from "../actions/fetchEmployees";
+import sendEmployee from "../actions/sendEmployee";
+import { useDispatch } from "react-redux";
+
 const Employees = () => {
   const [form, setForm] = useState({ name: "", lastName: "", date: "" });
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
 
   const setField = (field, value) => {
     setForm({
@@ -42,10 +47,13 @@ const Employees = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log("submit correcto", form);
-      //sendEmployee(form);
+      dispatch(sendEmployee(form));
+      setTimeout(() => {
+        dispatch(fetchEmployees());
+      }, 400);
     }
   };
+
   return (
     <div className={styles.formEmployee}>
       <EmployeesTable />
@@ -86,7 +94,7 @@ const Employees = () => {
             required
             type="date"
             onChange={(e) => {
-              setField("date", e.target.value);
+              setField("date", e.target.value.replaceAll("-", "/"));
             }}
             isInvalid={!!errors.date}
           />

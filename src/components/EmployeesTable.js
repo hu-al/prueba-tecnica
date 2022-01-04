@@ -4,16 +4,20 @@ import { useTable, usePagination } from "react-table";
 import fetchEmployees from "../actions/fetchEmployees";
 import { Button } from "react-bootstrap";
 import styles from "./EmployeesTable.module.css";
+import { useState } from "react";
 
 const EmployeesTable = () => {
   const employees = useSelector((state) => state.fetchEmployees);
   const dispatch = useDispatch();
-
-  console.log("employees", employees);
+  const [pageIndexCopy, setPageIndexCopy] = useState(0);
 
   useEffect(() => {
     dispatch(fetchEmployees());
   }, []);
+
+  useEffect(() => {
+    setPageIndexCopy(pageIndex);
+  }, [employees.success]);
 
   const data = useMemo(
     () => (employees.success ? employees.data : []),
@@ -42,7 +46,7 @@ const EmployeesTable = () => {
     {
       columns,
       data,
-      initialState: { pageIndex: 2 },
+      initialState: { pageIndex: pageIndexCopy },
     },
     usePagination
   );
@@ -95,7 +99,9 @@ const EmployeesTable = () => {
         <Button
           variant="outline-primary"
           size="sm"
-          onClick={() => previousPage()}
+          onClick={() => {
+            previousPage();
+          }}
           disabled={!canPreviousPage}
         >
           {"<"}
@@ -103,7 +109,9 @@ const EmployeesTable = () => {
         <Button
           variant="outline-primary"
           size="sm"
-          onClick={() => nextPage()}
+          onClick={() => {
+            nextPage();
+          }}
           disabled={!canNextPage}
         >
           {">"}

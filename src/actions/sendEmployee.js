@@ -20,15 +20,22 @@ const sendEmployeeFailed = (err) => ({
 
 const sendEmployee = (data) => (dispatch) => {
   dispatch(sendEmployeeStarted());
+  let modifiedData = {
+    name: data.name,
+    last_name: data.lastName,
+    birthday: data.date,
+  };
   const url =
     "https://6edeayi7ch.execute-api.us-east-1.amazonaws.com/v1/examen/employees/aldo_solis";
   return axios
-    .post(url, data)
+    .post(url, modifiedData)
     .then((response) => {
       dispatch(sendEmployeeSucceeded());
+      console.log("envio de empleado correcto");
     })
     .catch((err) => {
       dispatch(sendEmployeeFailed(err));
+      console.log("error al enviar empleado", err);
     });
 };
 

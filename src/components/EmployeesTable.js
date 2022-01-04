@@ -1,6 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTable, usePagination, useGlobalFilter } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useGlobalFilter,
+  useRowSelect,
+} from "react-table";
 import fetchEmployees from "../actions/fetchEmployees";
 import { Button } from "react-bootstrap";
 import styles from "./EmployeesTable.module.css";
@@ -20,7 +25,12 @@ const EmployeesTable = () => {
   }, [employees.success]);
 
   const data = useMemo(
-    () => (employees.success ? employees.data : []),
+    () =>
+      employees.success
+        ? employees.data.concat(
+            new Array(10 - (employees.data.length % 10)).fill({})
+          )
+        : [],
     [employees.success]
   );
 
@@ -73,12 +83,15 @@ const EmployeesTable = () => {
 
   return (
     <div className={styles.employeesTable}>
-      <div className="searchTable">
+      <div className={styles.searchTable}>
         Búsqueda:{" "}
         <input
           type="text"
           value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
+          onChange={(e) => {
+            setGlobalFilter(e.target.value);
+            setPageIndexCopy(0);
+          }}
         />
       </div>
       <table {...getTableProps()}>

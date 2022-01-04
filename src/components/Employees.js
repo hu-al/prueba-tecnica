@@ -1,16 +1,17 @@
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Employees.module.css";
 import EmployeesTable from "./EmployeesTable";
 
 import fetchEmployees from "../actions/fetchEmployees";
 import sendEmployee from "../actions/sendEmployee";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Employees = () => {
   const [form, setForm] = useState({ name: "", lastName: "", date: "" });
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const sendSucceeded = useSelector((state) => state.sendEmployee.success);
 
   const setField = (field, value) => {
     setForm({
@@ -47,12 +48,13 @@ const Employees = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      dispatch(sendEmployee(form));
-      setTimeout(() => {
-        dispatch(fetchEmployees());
-      }, 400);
+      dispatch(sendEmployee({ ...form, date: form.date.replaceAll("-", "/") }));
     }
   };
+
+  useEffect(() => {
+    if (sendSucceeded) setForm({ name: "", lastName: "", date: "" });
+  }, [sendSucceeded]);
 
   return (
     <div className={styles.formEmployee}>
@@ -63,6 +65,7 @@ const Employees = () => {
           <Form.Control
             required
             type="text"
+            value={form.name}
             maxLength={30}
             onChange={(e) => {
               setField("name", e.target.value);
@@ -78,6 +81,7 @@ const Employees = () => {
           <Form.Control
             required
             type="text"
+            value={form.lastName}
             maxLength={30}
             onChange={(e) => {
               setField("lastName", e.target.value);
@@ -93,8 +97,9 @@ const Employees = () => {
           <Form.Control
             required
             type="date"
+            value={form.date}
             onChange={(e) => {
-              setField("date", e.target.value.replaceAll("-", "/"));
+              setField("date", e.target.value);
             }}
             isInvalid={!!errors.date}
           />

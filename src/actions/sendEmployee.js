@@ -4,6 +4,7 @@ import {
   SEND_EMPLOYEE_STARTED,
   SEND_EMPLOYEE_SUCCEEDED,
 } from "./constants";
+import fetchEmployees from "./fetchEmployees";
 
 const sendEmployeeStarted = () => ({
   type: SEND_EMPLOYEE_STARTED,
@@ -20,11 +21,13 @@ const sendEmployeeFailed = (err) => ({
 
 const sendEmployee = (data) => (dispatch) => {
   dispatch(sendEmployeeStarted());
+
   let modifiedData = {
     name: data.name,
     last_name: data.lastName,
     birthday: data.date,
   };
+
   const url =
     "https://6edeayi7ch.execute-api.us-east-1.amazonaws.com/v1/examen/employees/aldo_solis";
   return axios
@@ -32,6 +35,7 @@ const sendEmployee = (data) => (dispatch) => {
     .then((response) => {
       dispatch(sendEmployeeSucceeded());
       console.log("envio de empleado correcto");
+      dispatch(fetchEmployees());
     })
     .catch((err) => {
       dispatch(sendEmployeeFailed(err));

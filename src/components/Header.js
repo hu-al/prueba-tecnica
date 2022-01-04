@@ -6,6 +6,7 @@ import { fakeLogout } from "../actions/fakeLogin";
 
 const Header = () => {
   let isLogged = useSelector((state) => state.fakeLogin.isLogged);
+  let name = useSelector((state) => state.fakeLogin.name);
   let dispatch = useDispatch();
 
   const handleClick = () => {
@@ -30,9 +31,12 @@ const Header = () => {
           </Nav>
           <Nav>
             {isLogged ? (
-              <Nav.Link as={Link} onClick={handleClick} to="/">
-                Logout
-              </Nav.Link>
+              <>
+                <Navbar.Text>Bienvenido, {name}</Navbar.Text>
+                <Nav.Link as={Link} onClick={handleClick} to="/">
+                  Logout
+                </Nav.Link>
+              </>
             ) : (
               <Nav.Link as={Link} to="login">
                 Login

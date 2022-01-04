@@ -73,7 +73,7 @@ const EmployeesTable = () => {
 
   return (
     <div className={styles.employeesTable}>
-      <div>
+      <div className="searchTable">
         Búsqueda:{" "}
         <input
           type="text"

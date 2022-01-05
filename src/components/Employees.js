@@ -2,8 +2,6 @@ import { Form, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import styles from "./Employees.module.css";
 import EmployeesTable from "./EmployeesTable";
-
-import fetchEmployees from "../actions/fetchEmployees";
 import sendEmployee from "../actions/sendEmployee";
 import { useDispatch, useSelector } from "react-redux";
 
